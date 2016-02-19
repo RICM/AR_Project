@@ -21,9 +21,12 @@ import java.util.jar.JarInputStream;
  * @author Morat 
  */
 public class Jar implements Iterable<Map.Entry<String,byte[]>>, Serializable{
+
 	private static final long serialVersionUID = 1803791441059733817L;
+
 	/** le contenu du fichier jar */
 	private Map<String,byte[]> contents = new HashMap<String,byte[]>();
+
 	/**
 	 * création d'un Jar. l'ensemble des ressources contenues
 	 * dans le fichier peuvent être accédées via les méthodes getResource ou getClass.
@@ -64,6 +67,7 @@ public class Jar implements Iterable<Map.Entry<String,byte[]>>, Serializable{
 			contents.put(entry.getName(), buffer);
 		}
 	}
+
 	/**
    * Restitue le contenu d'un composant du jar.
    * @param name le nom de la ressource.

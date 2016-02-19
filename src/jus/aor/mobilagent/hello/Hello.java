@@ -22,12 +22,14 @@ public class Hello extends Agent{
 	 public Hello(Object... args) {
 		 // ....
 	 }
+
 	 /**
 	 * l'action à entreprendre sur les serveurs visités  
 	 */
 	protected _Action doIt = new _Action(){
 		// ...
 	};
+
 	/* (non-Javadoc)
 	 * @see jus.aor.mobilagent.kernel.Agent#retour()
 	 */

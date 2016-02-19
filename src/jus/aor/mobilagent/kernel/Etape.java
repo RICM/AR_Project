@@ -11,11 +11,15 @@ import java.net.URI;
  * @author  Morat
  */
 public class Etape implements Serializable{
+
 	private static final long serialVersionUID = 4102055378099993883L;
+
 	/** l'adresse du serveur de l'étape */
 	protected URI server;
+
 	/** l'action à réaliser à cette étape */
 	protected _Action action;
+
 	/**
 	 * Création d'une étape à partir d'une adresse de serveur et d'une action.
 	 * @param server le serveur de l'étape
@@ -25,6 +29,7 @@ public class Etape implements Serializable{
 		this.server = server;
 		this.action = action;
 	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */

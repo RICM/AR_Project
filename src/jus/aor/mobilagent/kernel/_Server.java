@@ -9,6 +9,7 @@ import java.util.List;
  * @author morat 
  */
 public interface _Server{
+
 	/**
 	 * Ajoute le service caractérisé par les arguments
 	 * @param name nom du service
@@ -17,6 +18,7 @@ public interface _Server{
 	 * @param args arguments de construction du service
 	 */
 	public abstract void addService(String name, String classeName, String codeBase, Object... args);
+
 	/**
 	 * déploie l'agent caractérisé par les arguments sur le serveur
 	 * @param classeName classe de l'agent
@@ -26,6 +28,7 @@ public interface _Server{
 	 * @param etapeAction la liste ds actions des étapes
 	 */
 	public abstract void deployAgent(String classeName, Object[] args, String codeBase, List<String> etapeAddress, List<String> etapeAction);
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */

@@ -1,14 +1,18 @@
-/**
+package jus.aor.rmi; /**
  * J<i>ava</i> U<i>tilities</i> for S<i>tudents</i>
  */
+
+import java.rmi.RemoteException;
 
 /**
  * Représente un client effectuant une requête lui permettant d'obtenir les numéros de téléphone des hôtels répondant à son critère de choix.
  * @author  Morat
  */
 public class LookForHotel{
+
 	/** le critère de localisaton choisi */
 	private String localisation;
+
 	// ...
 	/**
 	 * Définition de l'objet représentant l'interrogation.
@@ -18,12 +22,13 @@ public class LookForHotel{
 	public LookForHotel(String... args){
 		localisation = args[0];
 	}
+
 	/**
 	 * réalise une intérrogation
 	 * @return la durée de l'interrogation
 	 * @throws RemoteException
 	 */
-	public long call() {
+	public long call() throws RemoteException {
 		// ...
 	}
 
