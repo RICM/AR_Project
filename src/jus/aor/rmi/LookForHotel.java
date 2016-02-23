@@ -49,7 +49,7 @@ public class LookForHotel{
 			chaines = Naming.list("//localhost/");
 			for (String ch : chaines) {
 				if(Pattern.matches("//*/Chaine*", ch)) {
-					_Chaine c = (_Chaine) Naming.lookup("ch");
+					_Chaine c = (_Chaine) Naming.lookup(ch);
 					hotels.addAll(c.get(localisation));
 				}
 			}
