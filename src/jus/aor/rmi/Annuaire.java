@@ -2,18 +2,19 @@ package jus.aor.rmi;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Map;
 
-public class Annuaire extends UnicastRemoteObject implements _Annuaire{
+public class Annuaire extends UnicastRemoteObject implements _Annuaire {
 
-	protected Annuaire() throws RemoteException {
-		super();
-		// TODO Auto-generated constructor stub
+	Map<String, Numero> annuaire;
+
+	protected Annuaire(Map<String, Numero> annuaire) throws RemoteException {
+		this.annuaire = annuaire;
 	}
 
 	@Override
-	public Numero get(String abonne) {
-		// TODO Auto-generated method stub
-		return null;
+	public Numero get(String abonne) throws RemoteException {
+		return annuaire.get(abonne);
 	}
 
 }

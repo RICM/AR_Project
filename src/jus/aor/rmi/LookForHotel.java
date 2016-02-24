@@ -1,6 +1,6 @@
 package jus.aor.rmi; /**
- * J<i>ava</i> U<i>tilities</i> for S<i>tudents</i>
- */
+						* J<i>ava</i> U<i>tilities</i> for S<i>tudents</i>
+						*/
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -10,30 +10,35 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Représente un client effectuant une requête lui permettant d'obtenir les numéros de téléphone des hôtels répondant à son critère de choix.
- * @author  Morat
+ * Représente un client effectuant une requête lui permettant d'obtenir les
+ * numéros de téléphone des hôtels répondant à son critère de choix.
+ * 
+ * @author Morat
  */
-public class LookForHotel{
+public class LookForHotel {
 
 	/** le critère de localisaton choisi */
 	private String localisation;
-	
 
 	// ...
 	/**
 	 * Définition de l'objet représentant l'interrogation.
-	 * @param args les arguments n'en comportant qu'un seul qui indique le critère
-	 *          de localisation
+	 * 
+	 * @param args
+	 *            les arguments n'en comportant qu'un seul qui indique le
+	 *            critère de localisation
 	 */
-	public LookForHotel(String... args){
+	public LookForHotel(String... args) {
 		localisation = args[0];
 	}
 
 	/**
 	 * réalise une intérrogation
+	 * 
 	 * @return la durée de l'interrogation
 	 * @throws RemoteException
 	 */
@@ -43,28 +48,32 @@ public class LookForHotel{
 		Map<Hotel, Numero> ann = new HashMap<>();
 
 		String[] chaines;
-		
+
 		try {
-			// Découvrir toutes les chaines exposées par le registre et interroger chacune.
+			// Découvrir toutes les chaines exposées par le registre et
+			// interroger chacune.
 			chaines = Naming.list("//localhost/");
+			Pattern p = Pattern.compile("//localhost:1099/Chaine\\p{Digit}+");
 			for (String ch : chaines) {
-				if(Pattern.matches("//*/Chaine*", ch)) {
+				if (p.matcher(ch).matches()) {
 					_Chaine c = (_Chaine) Naming.lookup(ch);
-					hotels.addAll(c.get(localisation));
+					List<Hotel> remoteHotels = c.get(localisation);
+					hotels.addAll(remoteHotels);
 				}
 			}
-			
+
+			System.out.println("Total hotels in " + localisation + ": " + hotels.size());
 			_Annuaire annuaire = (_Annuaire) Naming.lookup("//localhost/Annuaire");
 			for (Hotel hotel : hotels) {
 				Numero num = annuaire.get(hotel.name);
 				ann.put(hotel, num);
 			}
-			
+
 		} catch (MalformedURLException | NotBoundException e) {
 			e.printStackTrace();
 		}
 		long end = System.nanoTime();
-		
+
 		return end - start;
 	}
 

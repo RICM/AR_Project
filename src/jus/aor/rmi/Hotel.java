@@ -1,12 +1,20 @@
-package jus.aor.rmi; /**
+package jus.aor.rmi;
+
+import java.io.Serializable;
+
+/**
  * J<i>ava</i> U<i>tilities</i> for S<i>tudents</i>
  */
 
 /**
  * Un hotel qui est caractérisé par son nom et sa localisation.
- * @author Morat 
+ * 
+ * @author Morat
  */
-public class Hotel {
+public class Hotel implements Serializable {
+
+	private static final long serialVersionUID = -8174564043446503192L;
+
 	/** la localisation de l'hôtel */
 	public String localisation;
 
@@ -15,14 +23,24 @@ public class Hotel {
 
 	/**
 	 * Définition d'un hôtel par son nom et sa localisation.
-	 * @param name le nom de l'hôtel
-	 * @param localisation la localisation de l'hôtel
+	 * 
+	 * @param name
+	 *            le nom de l'hôtel
+	 * @param localisation
+	 *            la localisation de l'hôtel
 	 */
-	public Hotel(String name, String localisation) { this.name=name; this.localisation=localisation;}
+	public Hotel(String name, String localisation) {
+		this.name = name;
+		this.localisation = localisation;
+	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public String toString() {return "Hotel{"+name+","+localisation+"}";}
+	public String toString() {
+		return "Hotel{" + name + "," + localisation + "}";
+	}
 }
