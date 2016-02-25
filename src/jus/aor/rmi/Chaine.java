@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Chaine extends UnicastRemoteObject implements _Chaine {
 
+	private static final long serialVersionUID = -6907591845521765699L;
 	List<Hotel> hotels;
 
 	public Chaine(List<Hotel> hotels) throws RemoteException {
