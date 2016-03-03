@@ -1,9 +1,12 @@
-package jus.aor.rmi;
+package jus.aor.rmi.server;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
+
+import jus.aor.rmi.common.Hotel;
+import jus.aor.rmi.common._Chaine;
 
 public class Chaine extends UnicastRemoteObject implements _Chaine {
 

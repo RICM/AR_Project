@@ -1,4 +1,4 @@
-package jus.aor.rmi;
+package jus.aor.rmi.server;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +15,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import jus.aor.rmi.common.Hotel;
 
 /**
  * Created by matthieu on 19/02/16.

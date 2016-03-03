@@ -1,4 +1,4 @@
-package jus.aor.rmi;
+package jus.aor.rmi.client;
 
 import java.rmi.RemoteException;
 

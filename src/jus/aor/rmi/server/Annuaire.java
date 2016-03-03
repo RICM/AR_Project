@@ -1,8 +1,11 @@
-package jus.aor.rmi;
+package jus.aor.rmi.server;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Map;
+
+import jus.aor.rmi.common.Numero;
+import jus.aor.rmi.common._Annuaire;
 
 public class Annuaire extends UnicastRemoteObject implements _Annuaire {
 

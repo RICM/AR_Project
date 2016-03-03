@@ -1,4 +1,4 @@
-package jus.aor.rmi; /**
+package jus.aor.rmi.client; /**
 						* J<i>ava</i> U<i>tilities</i> for S<i>tudents</i>
 						*/
 
@@ -11,6 +11,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+
+import jus.aor.rmi.common.Hotel;
+import jus.aor.rmi.common.Numero;
+import jus.aor.rmi.common._Annuaire;
+import jus.aor.rmi.common._Chaine;
 
 /**
  * Représente un client effectuant une requête lui permettant d'obtenir les

@@ -1,4 +1,4 @@
-package jus.aor.rmi;
+package jus.aor.rmi.common;
 
 import java.io.Serializable;
 
