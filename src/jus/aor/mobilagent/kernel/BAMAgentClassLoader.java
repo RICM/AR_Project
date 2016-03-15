@@ -6,6 +6,7 @@ package jus.aor.mobilagent.kernel;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.jar.JarEntry;
@@ -27,6 +28,7 @@ public class BAMAgentClassLoader extends ClassLoader {
 	 */
 	public BAMAgentClassLoader(String jarName, ClassLoader parent) throws JarException, IOException {
 		super(parent);
+		classes = new HashMap<>();
 		Jar jar = new Jar(jarName);
 		integrateCode(jar);
 	}
@@ -36,6 +38,7 @@ public class BAMAgentClassLoader extends ClassLoader {
 	 */
 	public BAMAgentClassLoader(ClassLoader parent) {
 		super(parent);
+		classes = new HashMap<>();
 	}
 
 	/**
