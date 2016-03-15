@@ -28,9 +28,7 @@ public class BAMAgentClassLoader extends ClassLoader {
 	public BAMAgentClassLoader(String jarName, ClassLoader parent) throws JarException, IOException {
 		super(parent);
 		Jar jar = new Jar(jarName);
-		for (Entry<String, byte[]> entry : jar) {
-			classes.put(entry.getKey(), entry.getValue());
-		}
+		integrateCode(jar);
 	}
 
 	/**
@@ -46,6 +44,8 @@ public class BAMAgentClassLoader extends ClassLoader {
 	public void integrateCode(Jar jar) {
 		for (Entry<String, byte[]> entry : jar) {
 			classes.put(entry.getKey(), entry.getValue());
+			Class<?> c = defineClass(entry.getKey(), entry.getValue(), 0, entry.getValue().length);
+			resolveClass(c);
 		}
 	}
 
