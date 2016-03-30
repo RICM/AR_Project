@@ -3,7 +3,10 @@
  */
 package jus.aor.mobilagent.kernel;
 
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
+import java.net.Socket;
+import java.net.URL;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +21,7 @@ import jus.aor.mobilagent.kernel._Agent;
 public final class Server implements _Server {
 	/** le nom logique du serveur */
 	protected String name;
-	/** le port où sera ataché le service du bus à agents mobiles. Pafr défaut on prendra le port 10140 */
+	/** le port où sera ataché le service du bus à agents mobiles. Par défaut on prendra le port 10140 */
 	protected int port=10140;
 	/** le server d'agent démarré sur ce noeud */
 	protected AgentServer agentServer;
@@ -40,7 +43,8 @@ public final class Server implements _Server {
 			loggerName = "jus/aor/mobilagent/"+InetAddress.getLocalHost().getHostName()+"/"+this.name;
 			logger=Logger.getLogger(loggerName);
 			/* démarrage du server d'agents mobiles attaché à cette machine */
-			//A COMPLETER
+			agentServer = new AgentServer(port, name);
+			new Thread(agentServer).start();
 			/* temporisation de mise en place du server d'agents */
 			Thread.sleep(1000);
 		}catch(Exception ex){
@@ -57,7 +61,11 @@ public final class Server implements _Server {
 	 */
 	public final void addService(String name, String classeName, String codeBase, Object... args) {
 		try {
-			
+			BAMServerClassLoader serverLoader = (BAMServerClassLoader) this.getClass().getClassLoader();
+			serverLoader.addURL(new URL(codeBase));
+			Class<?> serviceClass = Class.forName(classeName, true, serverLoader);
+			_Service<?> service = (_Service<?>) serviceClass.getConstructor(Object[].class).newInstance(args);
+			agentServer.addService(name, service);
 		}catch(Exception ex){
 			logger.log(Level.FINE," erreur durant le lancement du serveur"+this,ex);
 			return;
@@ -73,7 +81,7 @@ public final class Server implements _Server {
 	 */
 	public final void deployAgent(String classeName, Object[] args, String codeBase, List<String> etapeAddress, List<String> etapeAction) {
 		try {
-			//A COMPLETER en terme de startAgent
+			
 		}catch(Exception ex){
 			logger.log(Level.FINE," erreur durant le lancement du serveur"+this,ex);
 			return;
@@ -87,6 +95,11 @@ public final class Server implements _Server {
 	 * @throws Exception
 	 */
 	protected void startAgent(_Agent agent, BAMAgentClassLoader loader) throws Exception {
-		
+		try(Socket soc = new Socket(name, port)) {
+			ObjectOutputStream out = new ObjectOutputStream(soc.getOutputStream());
+			Jar repo = loader.extractCode();
+			out.writeObject(repo);
+			out.writeObject(agent);
+		}
 	}
 }

@@ -6,6 +6,7 @@ package jus.aor.mobilagent.kernel;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.URI;
 import java.net.UnknownHostException;
 import java.util.NoSuchElementException;
 
@@ -48,6 +49,8 @@ public abstract class Agent implements _Agent {
 		this.serverName = serverName;
 		if (route == null)
 			route = new Route(new Etape(agentServer.site(), _Action.NIHIL));
+		
+		route.add(new Etape(this.server.site(), _Action.NIHIL));
 	}
 
 	/*
@@ -87,10 +90,10 @@ public abstract class Agent implements _Agent {
 	}
 
 	protected abstract _Action retour();
-
-	protected void move() {
+	
+	protected void move(URI uri) {
 		try {
-			socket = new Socket(route.get().server.getHost(), route.get().server.getPort());
+			socket = new Socket(uri.getHost(), uri.getPort());
 			BAMAgentClassLoader agentLoader = (BAMAgentClassLoader) this.getClass().getClassLoader();
 			Jar repo = agentLoader.extractCode();
 
@@ -105,5 +108,9 @@ public abstract class Agent implements _Agent {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void move() {
+		move(route.get().server);
 	}
 }

@@ -4,6 +4,7 @@
 package jus.aor.mobilagent.kernel;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -13,16 +14,19 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AgentServer {
+public class AgentServer implements Runnable {
 
 	private Map<String, _Service<?>> services;
 	private String name;
 	private int port;
 
+	private BAMServerClassLoader serverLoader;
+
 	public AgentServer(int p, String n) {
 		port = p;
 		name = n;
 		services = new HashMap<String, _Service<?>>();
+
 	}
 
 	public void run() {
@@ -40,11 +44,12 @@ public class AgentServer {
 		while (true) {
 			try {
 				clientSoc = servSoc.accept();
-				// get the mobile agent
-				_Agent agent = getAgent(clientSoc);
+
 				// get the repository
 				Jar jar = (Jar) ais.readObject();
 				agentLoader.integrateCode(jar);
+				// get the mobile agent
+				_Agent agent = getAgent(clientSoc);
 				agent.init(this, name);
 				new Thread(agent).start();
 			} catch (IOException e) {
@@ -80,9 +85,15 @@ public class AgentServer {
 	}
 
 	private _Agent getAgent(Socket soc) throws IOException, ClassNotFoundException {
-		AgentInputStream ais = new AgentInputStream(soc.getInputStream(),
-				new BAMAgentClassLoader(this.getClass().getClassLoader()));
-		return (_Agent) ais.readObject();
+		ObjectInputStream in = new ObjectInputStream(soc.getInputStream());
+		Jar repo = (Jar) in.readObject();
+		BAMAgentClassLoader agentLoader = new BAMAgentClassLoader(this.getClass().getClassLoader());
+		agentLoader.integrateCode(repo);
+		_Agent agent = null;
+		try (AgentInputStream ais = new AgentInputStream(soc.getInputStream(), agentLoader) {
+			agent = (_Agent) ais.readObject();
+		}
+		return agent;
 	}
 
 }
