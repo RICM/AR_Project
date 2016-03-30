@@ -36,13 +36,20 @@ public class BAMAgentClassLoader extends ClassLoader {
 
 	/**
 	 * @param jar
+	 * @throws ClassNotFoundException 
 	 */
 	public void integrateCode(Jar jar) {
 		for (Entry<String, byte[]> entry : jar) {
-			classes.put(entry.getKey(), entry.getValue());
-			Class<?> c = defineClass(entry.getKey(), entry.getValue(), 0, entry.getValue().length);
-			// class must be resolved b efore it can be used
-			resolveClass(c);
+			String className = className(entry.getKey());
+			classes.put(className, entry.getValue());
+			Class<?> c = defineClass(className, entry.getValue(), 0, entry.getValue().length);
+			// class must be resolved before it can be used
+			try {
+				loadClass(className);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -56,6 +63,10 @@ public class BAMAgentClassLoader extends ClassLoader {
 			}
 		}
 		return new Jar(jarFile.getPath());
+	}
+	
+	private String className(String s) {
+		return s.replace("/", ".").replace(".class", "");
 	}
 
 }

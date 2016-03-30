@@ -5,6 +5,7 @@ package jus.aor.mobilagent.kernel;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.net.URI;
 import java.net.UnknownHostException;
@@ -18,9 +19,11 @@ public abstract class Agent implements _Agent {
 	private static final long serialVersionUID = -5021567351232550115L;
 	protected transient AgentServer server;
 	protected transient String serverName;
-	protected Route route;
+	private Route route;
 
 	private transient Socket socket;
+	
+	public Agent(Object... args) {}
 
 	/*
 	 * (non-Javadoc)
@@ -29,6 +32,7 @@ public abstract class Agent implements _Agent {
 	 */
 	@Override
 	public final void run() {
+		System.out.println(route.hasNext());
 		if (route.hasNext()) {
 			Etape etape = route.next();
 			etape.action.execute();
@@ -97,9 +101,12 @@ public abstract class Agent implements _Agent {
 			BAMAgentClassLoader agentLoader = (BAMAgentClassLoader) this.getClass().getClassLoader();
 			Jar repo = agentLoader.extractCode();
 
-			ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-			out.writeObject(repo);
-			out.writeObject(this);
+			OutputStream out = socket.getOutputStream();
+			
+			ObjectOutputStream outRepo = new ObjectOutputStream(out);
+			ObjectOutputStream outAgent = new ObjectOutputStream(out);
+			outRepo.writeObject(repo);
+			outAgent.writeObject(this);
 
 		} catch (UnknownHostException e) {
 			e.printStackTrace();

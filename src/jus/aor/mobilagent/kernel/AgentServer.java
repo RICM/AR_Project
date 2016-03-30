@@ -4,6 +4,7 @@
 package jus.aor.mobilagent.kernel;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -40,7 +41,6 @@ public class AgentServer implements Runnable {
 		}
 
 		Socket clientSoc;
-		BAMAgentClassLoader agentLoader = new BAMAgentClassLoader(this.getClass().getClassLoader());
 		while (true) {
 			try {
 				clientSoc = servSoc.accept();
@@ -82,14 +82,20 @@ public class AgentServer implements Runnable {
 	}
 
 	private _Agent getAgent(Socket soc) throws IOException, ClassNotFoundException {
-		ObjectInputStream in = new ObjectInputStream(soc.getInputStream());
-		Jar repo = (Jar) in.readObject();
+		assert !soc.isClosed();
 		BAMAgentClassLoader agentLoader = new BAMAgentClassLoader(this.getClass().getClassLoader());
+		
+		InputStream in = soc.getInputStream();
+		ObjectInputStream inRepo = new ObjectInputStream(in);
+		AgentInputStream ais = new AgentInputStream(in, agentLoader);
+		
+		Jar repo = (Jar) inRepo.readObject();
+		System.out.println(repo.toString());
+		
 		agentLoader.integrateCode(repo);
+		
 		_Agent agent = null;
-		try (AgentInputStream ais = new AgentInputStream(soc.getInputStream(), agentLoader)) {
-			agent = (_Agent) ais.readObject();
-		}
+		agent = (_Agent) ais.readObject();
 		return agent;
 	}
 

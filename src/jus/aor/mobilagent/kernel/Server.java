@@ -4,6 +4,7 @@
 package jus.aor.mobilagent.kernel;
 
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -46,7 +47,7 @@ public final class Server implements _Server {
 			logger=Logger.getLogger(loggerName);
 			/* démarrage du server d'agents mobiles attaché à cette machine */
 			agentServer = new AgentServer(port, name);
-			new Thread(agentServer).start();
+			(new Thread(agentServer)).start();
 			/* temporisation de mise en place du server d'agents */
 			Thread.sleep(1000);
 		}catch(Exception ex){
@@ -83,10 +84,10 @@ public final class Server implements _Server {
 	 */
 	public final void deployAgent(String classeName, Object[] args, String codeBase, List<String> etapeAddress, List<String> etapeAction) {
 		try {
-			Jar repo = new Jar(codeBase);
-			BAMAgentClassLoader agentLoader = new BAMAgentClassLoader(this.getClass().getClassLoader());
-			Class<_Agent> agentClass = (Class<_Agent>) Class.forName(classeName, true, agentLoader);
-			_Agent agent = agentClass.getConstructor(Object[].class).newInstance(args);
+			URI uri = new URI(codeBase);
+			BAMAgentClassLoader agentLoader = new BAMAgentClassLoader(uri.getPath(), this.getClass().getClassLoader());
+			Class<?> agentClass = Class.forName(classeName, true, agentLoader);
+			_Agent agent = (_Agent) agentClass.getConstructor(Object[].class).newInstance(new Object[]{args});
 			agent.init(agentServer, name);
 			for(int i = 0; i < etapeAddress.size(); i++) {
 				Field f = agentClass.getDeclaredField(etapeAction.get(i));
@@ -94,9 +95,11 @@ public final class Server implements _Server {
 				_Action action = (_Action) f.get(agent);
 				agent.addEtape(new Etape(new URI(etapeAddress.get(i)), action));
 			}
+			System.out.println(((Agent) agent).route());
 			startAgent(agent, agentLoader);
 		}catch(Exception ex){
 			logger.log(Level.FINE," erreur durant le lancement du serveur"+this,ex);
+			ex.printStackTrace();
 			return;
 		}
 	}
@@ -108,12 +111,14 @@ public final class Server implements _Server {
 	 * @throws Exception
 	 */
 	protected void startAgent(_Agent agent, BAMAgentClassLoader loader) throws Exception {
-		try(Socket soc = new Socket(name, port)) {
-			ObjectOutputStream outRepo = new ObjectOutputStream(soc.getOutputStream());
-			ObjectOutputStream outAgent = new ObjectOutputStream(soc.getOutputStream());
+		try(Socket soc = new Socket(agentServer.site().getHost(), agentServer.site().getPort())) {
+			OutputStream out  = soc.getOutputStream();
+			ObjectOutputStream outRepo = new ObjectOutputStream(out);
+			ObjectOutputStream outAgent = new ObjectOutputStream(out);
 			Jar repo = loader.extractCode();
-			outRepo.writeObject(repo);
-			outAgent.writeObject(agent);
+			outAgent.writeObject(repo);
+			outRepo.writeObject(agent);
+			System.out.println("sent the agent and the jar");
 		}
 	}
 }
