@@ -20,14 +20,16 @@ public class Hello extends Agent{
 	  * @param args aucun argument n'est requis
 	  */
 	 public Hello(Object... args) {
-		 // ....
+		 
 	 }
 
 	 /**
 	 * l'action à entreprendre sur les serveurs visités  
 	 */
 	protected _Action doIt = new _Action(){
-		// ...
+		public void execute() {
+			System.out.println(this.toString());
+		}
 	};
 
 	/* (non-Javadoc)
@@ -35,7 +37,13 @@ public class Hello extends Agent{
 	 */
 	@Override
 	protected _Action retour(){
-		// return ...;
+		return new _Action() {
+			
+			@Override
+			public void execute() {
+				System.out.println(this.toString());
+			}
+		};
 	}
-	// ...
+
 }

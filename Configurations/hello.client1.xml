@@ -2,9 +2,9 @@
 <!DOCTYPE HTML PUBLIC  "-//W3C//DTD HTML 4.0 Transitional//EN" "Server.dtd"> 
 <server>
 	<port value="111"/>
-	<agent class="jus.aor.mobilagent.hello.Hello" codebase=".../Hello.jar" args="">
-		<etape server="mobilagent://...:222/" action="doIt" />
-		<etape server="mobilagent://...:333/" action="doIt" />
+	<agent class="jus.aor.mobilagent.hello.Hello" codebase="file:///home/marwan/git/AR_Project/jars/Hello.jar" args="">
+		<etape server="mobilagent://localhost:222/" action="doIt" />
+		<etape server="mobilagent://localhost:333/" action="doIt" />
 	</agent>
 </server>
 

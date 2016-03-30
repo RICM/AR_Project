@@ -45,10 +45,7 @@ public class AgentServer implements Runnable {
 			try {
 				clientSoc = servSoc.accept();
 
-				// get the repository
-				Jar jar = (Jar) ais.readObject();
-				agentLoader.integrateCode(jar);
-				// get the mobile agent
+				// load the agent
 				_Agent agent = getAgent(clientSoc);
 				agent.init(this, name);
 				new Thread(agent).start();
@@ -90,7 +87,7 @@ public class AgentServer implements Runnable {
 		BAMAgentClassLoader agentLoader = new BAMAgentClassLoader(this.getClass().getClassLoader());
 		agentLoader.integrateCode(repo);
 		_Agent agent = null;
-		try (AgentInputStream ais = new AgentInputStream(soc.getInputStream(), agentLoader) {
+		try (AgentInputStream ais = new AgentInputStream(soc.getInputStream(), agentLoader)) {
 			agent = (_Agent) ais.readObject();
 		}
 		return agent;

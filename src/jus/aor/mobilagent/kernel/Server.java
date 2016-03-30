@@ -4,8 +4,10 @@
 package jus.aor.mobilagent.kernel;
 
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Field;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.URI;
 import java.net.URL;
 import java.util.List;
 import java.util.logging.Level;
@@ -81,7 +83,18 @@ public final class Server implements _Server {
 	 */
 	public final void deployAgent(String classeName, Object[] args, String codeBase, List<String> etapeAddress, List<String> etapeAction) {
 		try {
-			
+			Jar repo = new Jar(codeBase);
+			BAMAgentClassLoader agentLoader = new BAMAgentClassLoader(this.getClass().getClassLoader());
+			Class<_Agent> agentClass = (Class<_Agent>) Class.forName(classeName, true, agentLoader);
+			_Agent agent = agentClass.getConstructor(Object[].class).newInstance(args);
+			agent.init(agentServer, name);
+			for(int i = 0; i < etapeAddress.size(); i++) {
+				Field f = agentClass.getDeclaredField(etapeAction.get(i));
+				f.setAccessible(true);
+				_Action action = (_Action) f.get(agent);
+				agent.addEtape(new Etape(new URI(etapeAddress.get(i)), action));
+			}
+			startAgent(agent, agentLoader);
 		}catch(Exception ex){
 			logger.log(Level.FINE," erreur durant le lancement du serveur"+this,ex);
 			return;
@@ -96,10 +109,11 @@ public final class Server implements _Server {
 	 */
 	protected void startAgent(_Agent agent, BAMAgentClassLoader loader) throws Exception {
 		try(Socket soc = new Socket(name, port)) {
-			ObjectOutputStream out = new ObjectOutputStream(soc.getOutputStream());
+			ObjectOutputStream outRepo = new ObjectOutputStream(soc.getOutputStream());
+			ObjectOutputStream outAgent = new ObjectOutputStream(soc.getOutputStream());
 			Jar repo = loader.extractCode();
-			out.writeObject(repo);
-			out.writeObject(agent);
+			outRepo.writeObject(repo);
+			outAgent.writeObject(agent);
 		}
 	}
 }
