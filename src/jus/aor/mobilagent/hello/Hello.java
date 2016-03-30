@@ -1,11 +1,5 @@
 package jus.aor.mobilagent.hello;
 
-import java.net.URI;
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-
 import jus.aor.mobilagent.kernel._Action;
 import jus.aor.mobilagent.kernel.Agent;
 
@@ -16,6 +10,11 @@ import jus.aor.mobilagent.kernel.Agent;
 public class Hello extends Agent{
 
 	 /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3882387847447156013L;
+
+	/**
 	  * construction d'un agent de type hello.
 	  * @param args aucun argument n'est requis
 	  */
@@ -25,8 +24,11 @@ public class Hello extends Agent{
 	 * l'action à entreprendre sur les serveurs visités  
 	 */
 	protected _Action doIt = new _Action(){
+		
+		private static final long serialVersionUID = -9129644307555501553L;
+
 		public void execute() {
-			System.out.println(this.toString());
+			System.out.println("doIt");
 		}
 	};
 
@@ -37,9 +39,11 @@ public class Hello extends Agent{
 	protected _Action retour(){
 		return new _Action() {
 			
+			private static final long serialVersionUID = 8112403583439231794L;
+
 			@Override
 			public void execute() {
-				System.out.println(this.toString());
+				System.out.println("retour de Hello");
 			}
 		};
 	}

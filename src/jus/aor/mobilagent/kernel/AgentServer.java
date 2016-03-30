@@ -47,7 +47,7 @@ public class AgentServer implements Runnable {
 
 				// load the agent
 				_Agent agent = getAgent(clientSoc);
-				agent.init(this, name);
+				agent.reInit(this, name);
 				new Thread(agent).start();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -90,7 +90,7 @@ public class AgentServer implements Runnable {
 		AgentInputStream ais = new AgentInputStream(in, agentLoader);
 		
 		Jar repo = (Jar) inRepo.readObject();
-		System.out.println(repo.toString());
+		//System.out.println(repo.toString());
 		
 		agentLoader.integrateCode(repo);
 		

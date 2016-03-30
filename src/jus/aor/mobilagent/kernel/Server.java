@@ -95,7 +95,6 @@ public final class Server implements _Server {
 				_Action action = (_Action) f.get(agent);
 				agent.addEtape(new Etape(new URI(etapeAddress.get(i)), action));
 			}
-			System.out.println(((Agent) agent).route());
 			startAgent(agent, agentLoader);
 		}catch(Exception ex){
 			logger.log(Level.FINE," erreur durant le lancement du serveur"+this,ex);
@@ -118,7 +117,6 @@ public final class Server implements _Server {
 			Jar repo = loader.extractCode();
 			outAgent.writeObject(repo);
 			outRepo.writeObject(agent);
-			System.out.println("sent the agent and the jar");
 		}
 	}
 }
