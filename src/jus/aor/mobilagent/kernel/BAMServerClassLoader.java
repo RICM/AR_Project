@@ -18,7 +18,6 @@ public class BAMServerClassLoader extends URLClassLoader {
 	 */
 	public BAMServerClassLoader(URL[] urls, ClassLoader parent) {
 		super(urls, parent);
-		
 	}
 	
 	public void addURL(URL url) {
@@ -32,5 +31,4 @@ public class BAMServerClassLoader extends URLClassLoader {
 	public String toString() {
 		return super.toString();
 	}
-
 }

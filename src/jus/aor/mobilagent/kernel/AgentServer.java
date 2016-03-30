@@ -13,10 +13,6 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author Marwan Hallal
- *
- */
 public class AgentServer {
 
 	private Map<String, _Service<?>> services;
@@ -45,8 +41,7 @@ public class AgentServer {
 			try {
 				clientSoc = servSoc.accept();
 				// get the mobile agent
-				AgentInputStream ais = new AgentInputStream(clientSoc.getInputStream(), agentLoader);
-				_Agent agent = (_Agent) ais.readObject();
+				_Agent agent = getAgent(clientSoc);
 				// get the repository
 				Jar jar = (Jar) ais.readObject();
 				agentLoader.integrateCode(jar);

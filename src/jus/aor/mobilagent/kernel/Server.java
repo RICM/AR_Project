@@ -3,10 +3,7 @@
  */
 package jus.aor.mobilagent.kernel;
 
-import java.lang.reflect.Field;
 import java.net.InetAddress;
-import java.net.URI;
-import java.net.URL;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +15,7 @@ import jus.aor.mobilagent.kernel._Agent;
  * Le serveur principal permettant le lancement d'un serveur d'agents mobiles et les fonctions permettant de déployer des services et des agents.
  * @author     Morat
  */
-public final class Server {
+public final class Server implements _Server {
 	/** le nom logique du serveur */
 	protected String name;
 	/** le port où sera ataché le service du bus à agents mobiles. Pafr défaut on prendra le port 10140 */
@@ -29,6 +26,7 @@ public final class Server {
 	protected String loggerName;
 	/** le logger de ce serveur */
 	protected Logger logger=null;
+	
 	/**
 	 * Démarre un serveur de type mobilagent 
 	 * @param port le port d'écuote du serveur d'agent 
@@ -59,7 +57,7 @@ public final class Server {
 	 */
 	public final void addService(String name, String classeName, String codeBase, Object... args) {
 		try {
-			//A COMPLETER
+			
 		}catch(Exception ex){
 			logger.log(Level.FINE," erreur durant le lancement du serveur"+this,ex);
 			return;
@@ -89,6 +87,6 @@ public final class Server {
 	 * @throws Exception
 	 */
 	protected void startAgent(_Agent agent, BAMAgentClassLoader loader) throws Exception {
-		//A COMPLETER
+		
 	}
 }

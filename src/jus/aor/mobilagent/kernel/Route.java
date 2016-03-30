@@ -34,15 +34,15 @@ class Route implements Iterable<Etape>, Serializable{
 	 * Ajoute une étape en fin de route.
 	 * @param e l'étape à ajouter
 	 */
-	public void add(Etape e) { route.add(route.size(),e);}
+	public void add(Etape e) { route.add(route.size(), e);}
 	/**
 	 * Restitue la prochaine étape ou la dernière qui est la base de départ.
 	 * @return la prochaine étape.
 	 */
 	Etape get() throws NoSuchElementException {
-		if(route.size() >= 1) return route.get(route.size() - 1);
+		if(route.size() >= 1) return route.get(0);
 		if(retour == null) throw new NoSuchElementException();
-		hasNext = false;
+		//hasNext = false;
 		return retour;
 	}
 	/**
@@ -50,7 +50,7 @@ class Route implements Iterable<Etape>, Serializable{
 	 * @return la prochaine étape.
 	 */
 	Etape next() throws NoSuchElementException {
-		if(route.size() >= 1) return route.remove(route.size() - 1);
+		if(route.size() >= 1) return route.remove(0);
 		if(retour == null) throw new NoSuchElementException();
 		hasNext = false;
 		return retour;
@@ -64,7 +64,8 @@ class Route implements Iterable<Etape>, Serializable{
 	/* (non-Javadoc)
 	 * @see java.lang.Iterable#iterator()
 	 */
-	public Iterator<Etape> iterator(){return route.iterator();}
+	public Iterator<Etape> iterator(){
+		return route.iterator();}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */

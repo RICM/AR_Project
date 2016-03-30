@@ -13,10 +13,6 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarException;
 import java.util.jar.JarOutputStream;
 
-/**
- * @author Marwan Hallal
- *
- */
 public class BAMAgentClassLoader extends ClassLoader {
 
 	Map<String, byte[]> classes;
@@ -33,9 +29,6 @@ public class BAMAgentClassLoader extends ClassLoader {
 		integrateCode(jar);
 	}
 
-	/**
-	 * 
-	 */
 	public BAMAgentClassLoader(ClassLoader parent) {
 		super(parent);
 		classes = new HashMap<>();
@@ -48,6 +41,7 @@ public class BAMAgentClassLoader extends ClassLoader {
 		for (Entry<String, byte[]> entry : jar) {
 			classes.put(entry.getKey(), entry.getValue());
 			Class<?> c = defineClass(entry.getKey(), entry.getValue(), 0, entry.getValue().length);
+			// class must be resolved b efore it can be used
 			resolveClass(c);
 		}
 	}
