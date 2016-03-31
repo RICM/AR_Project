@@ -53,6 +53,7 @@ public abstract class Agent implements _Agent {
 		if (route == null)
 			route = new Route( new Etape(agentServer.site(), this.retour()) );
 		
+		// first action to perform on the initial server is empty
 		route.add(new Etape(this.server.site(), _Action.NIHIL));
 	}
 
