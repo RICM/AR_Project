@@ -42,7 +42,6 @@ class Route implements Iterable<Etape>, Serializable{
 	Etape get() throws NoSuchElementException {
 		if(route.size() >= 1) return route.get(0);
 		if(retour == null) throw new NoSuchElementException();
-		//hasNext = false;
 		return retour;
 	}
 	/**
@@ -70,5 +69,5 @@ class Route implements Iterable<Etape>, Serializable{
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public String toString() {return route.toString().replaceAll(", ","->");}
+	public String toString() {return route.toString().replaceAll(", ","->") + "->" + retour.toString();}
 }

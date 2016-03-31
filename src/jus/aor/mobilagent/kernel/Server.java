@@ -47,6 +47,7 @@ public final class Server implements _Server {
 			logger=Logger.getLogger(loggerName);
 			/* démarrage du server d'agents mobiles attaché à cette machine */
 			agentServer = new AgentServer(port, name);
+			logger.log(Level.INFO, String.format("Starting Agent Server [%s] on port [%d]", name, port));
 			(new Thread(agentServer)).start();
 			/* temporisation de mise en place du server d'agents */
 			Thread.sleep(1000);
@@ -115,6 +116,7 @@ public final class Server implements _Server {
 			ObjectOutputStream outRepo = new ObjectOutputStream(out);
 			ObjectOutputStream outAgent = new ObjectOutputStream(out);
 			Jar repo = loader.extractCode();
+			logger.log(Level.INFO, agent.toString());
 			outAgent.writeObject(repo);
 			outRepo.writeObject(agent);
 		}

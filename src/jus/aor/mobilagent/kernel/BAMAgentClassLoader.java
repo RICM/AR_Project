@@ -44,12 +44,7 @@ public class BAMAgentClassLoader extends ClassLoader {
 			classes.put(className, entry.getValue());
 			Class<?> c = defineClass(className, entry.getValue(), 0, entry.getValue().length);
 			// class must be resolved before it can be used
-			try {
-				loadClass(className);
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			super.resolveClass(c);
 		}
 	}
 

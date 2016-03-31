@@ -9,9 +9,6 @@ import jus.aor.mobilagent.kernel.Agent;
  */
 public class Hello extends Agent{
 
-	 /**
-	 * 
-	 */
 	private static final long serialVersionUID = 3882387847447156013L;
 
 	/**
