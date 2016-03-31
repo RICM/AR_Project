@@ -14,10 +14,10 @@ public interface _Action extends Serializable {
 
 	/** l'action vide */
 	public static final _Action NIHIL = new _Action() {
-		public void execute() {
-			System.out.println("NIHIL");};
-	};
+		private static final long serialVersionUID = 9211608560914435550L;
 
+		public void execute() {};
+	};
 	/**
 	 * Exécute l'action
 	 */
