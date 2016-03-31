@@ -6,10 +6,6 @@ package jus.aor.mobilagent.kernel;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-/**
- * @author Marwan Hallal
- *
- */
 public class BAMServerClassLoader extends URLClassLoader {
 
 	/**

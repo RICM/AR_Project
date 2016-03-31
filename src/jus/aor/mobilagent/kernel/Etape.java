@@ -30,9 +30,6 @@ public class Etape implements Serializable{
 		this.action = action;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {return server+"("+action+")";}
 }

@@ -60,14 +60,9 @@ class Route implements Iterable<Etape>, Serializable{
 	 */
 	public boolean hasNext() { return hasNext;}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Iterable#iterator()
-	 */
 	public Iterator<Etape> iterator(){
 		return route.iterator();}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+	
 	@Override
 	public String toString() {return route.toString().replaceAll(", ","->") + "->" + retour.toString();}
 }

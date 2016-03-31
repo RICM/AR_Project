@@ -13,10 +13,8 @@ import java.util.NoSuchElementException;
 
 public abstract class Agent implements _Agent {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -5021567351232550115L;
+	
 	private Route route;
 	
 	protected transient AgentServer server;
@@ -25,11 +23,6 @@ public abstract class Agent implements _Agent {
 	
 	public Agent(Object... args) {}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Runnable#run()
-	 */
 	@Override
 	public final void run() {
 		if (route.hasNext()) {
@@ -40,12 +33,6 @@ public abstract class Agent implements _Agent {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see jus.aor.mobilagent.kernel._Agent#init(jus.aor.mobilagent.kernel.
-	 * AgentServer, java.lang.String)
-	 */
 	@Override
 	public void init(AgentServer agentServer, String serverName) {
 		this.server = agentServer;
@@ -57,24 +44,12 @@ public abstract class Agent implements _Agent {
 		route.add(new Etape(this.server.site(), _Action.NIHIL));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see jus.aor.mobilagent.kernel._Agent#reInit(jus.aor.mobilagent.kernel.
-	 * AgentServer, java.lang.String)
-	 */
 	@Override
 	public void reInit(AgentServer server, String serverName) {
 		this.server = server;
 		this.serverName = serverName;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see jus.aor.mobilagent.kernel._Agent#addEtape(jus.aor.mobilagent.kernel.
-	 * Etape)
-	 */
 	@Override
 	public final void addEtape(Etape etape) {
 		route.add(etape);
