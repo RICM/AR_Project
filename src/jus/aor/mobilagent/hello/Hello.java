@@ -11,13 +11,15 @@ public class Hello extends Agent{
 
 	private static final long serialVersionUID = 3882387847447156013L;
 	
-	private String visited = "";
+	private String visited;
 
 	/**
 	  * construction d'un agent de type hello.
 	  * @param args aucun argument n'est requis
 	  */
-	 public Hello(Object... args) {}
+	 public Hello(Object... args) {
+		 visited = "";
+	 }
 
 	 /**
 	 * l'action à entreprendre sur les serveurs visités  
