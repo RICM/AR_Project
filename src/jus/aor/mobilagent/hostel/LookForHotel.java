@@ -1,7 +1,7 @@
 /**
  * 
  */
-package jus.aor.mobilagent.lookforhotel;
+package jus.aor.mobilagent.hostel;
 
 import jus.aor.mobilagent.kernel.Agent;
 import jus.aor.mobilagent.kernel._Action;
