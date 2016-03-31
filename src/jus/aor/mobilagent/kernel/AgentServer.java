@@ -45,8 +45,8 @@ public class AgentServer implements Runnable {
 					System.exit(1);
 				}
 			}
-		} catch (IOException e1) {
-			e1.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 	}

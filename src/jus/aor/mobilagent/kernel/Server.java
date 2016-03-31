@@ -116,7 +116,6 @@ public final class Server implements _Server {
 			ObjectOutputStream outRepo = new ObjectOutputStream(out);
 			ObjectOutputStream outAgent = new ObjectOutputStream(out);
 			Jar repo = loader.extractCode();
-			logger.log(Level.INFO, agent.toString());
 			outAgent.writeObject(repo);
 			outRepo.writeObject(agent);
 		}

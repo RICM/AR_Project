@@ -10,6 +10,8 @@ import jus.aor.mobilagent.kernel.Agent;
 public class Hello extends Agent{
 
 	private static final long serialVersionUID = 3882387847447156013L;
+	
+	private String visited = "";
 
 	/**
 	  * construction d'un agent de type hello.
@@ -25,7 +27,8 @@ public class Hello extends Agent{
 		private static final long serialVersionUID = -9129644307555501553L;
 
 		public void execute() {
-			System.out.println("doIt");
+			System.out.println(server);
+			visited = visited.concat(String.format("%s\n", server));
 		}
 	};
 
@@ -40,7 +43,7 @@ public class Hello extends Agent{
 
 			@Override
 			public void execute() {
-				System.out.println("retour de Hello");
+				System.out.println(String.format("List of visited servers:\n%s", visited));
 			}
 		};
 	}
