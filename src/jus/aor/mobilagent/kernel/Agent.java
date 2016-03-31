@@ -17,10 +17,10 @@ public abstract class Agent implements _Agent {
 	 * 
 	 */
 	private static final long serialVersionUID = -5021567351232550115L;
+	private Route route;
+	
 	protected transient AgentServer server;
 	protected transient String serverName;
-	private Route route;
-
 	private transient Socket socket;
 	
 	public Agent(Object... args) {}
