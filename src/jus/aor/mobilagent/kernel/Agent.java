@@ -88,7 +88,7 @@ public abstract class Agent implements _Agent {
 	}
 
 	public final String toString() {
-		return "Agent on server " + serverName + " with remaining route: " + route();
+		return "Agent on server [" + serverName + "] with route: " + route.toString();
 
 	}
 
@@ -99,9 +99,7 @@ public abstract class Agent implements _Agent {
 			socket = new Socket(uri.getHost(), uri.getPort());
 			BAMAgentClassLoader agentLoader = (BAMAgentClassLoader) this.getClass().getClassLoader();
 			Jar repo = agentLoader.extractCode();
-
 			OutputStream out = socket.getOutputStream();
-			
 			ObjectOutputStream outRepo = new ObjectOutputStream(out);
 			ObjectOutputStream outAgent = new ObjectOutputStream(out);
 			outRepo.writeObject(repo);

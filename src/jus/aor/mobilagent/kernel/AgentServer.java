@@ -21,41 +21,32 @@ public class AgentServer implements Runnable {
 	private String name;
 	private int port;
 
-	private BAMServerClassLoader serverLoader;
-
 	public AgentServer(int p, String n) {
 		port = p;
 		name = n;
 		services = new HashMap<String, _Service<?>>();
-
 	}
 
 	public void run() {
-		ServerSocket servSoc = null;
-		try {
-			servSoc = new ServerSocket(port);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.exit(1);
-		}
-
-		Socket clientSoc;
-		while (true) {
-			try {
-				clientSoc = servSoc.accept();
-
-				// load the agent
-				_Agent agent = getAgent(clientSoc);
-				agent.reInit(this, name);
-				new Thread(agent).start();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-				System.exit(1);
+		try (ServerSocket servSoc = new ServerSocket(port)) {
+			while (true) {
+				try {
+					// wait for incoming connections from mobile agents
+					Socket clientSoc = servSoc.accept();
+					// load the repository and the agent
+					_Agent agent = getAgent(clientSoc);
+					// launch the agent
+					agent.reInit(this, name);
+					new Thread(agent).start();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+					System.exit(1);
+				}
 			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
 
 	}
@@ -82,20 +73,19 @@ public class AgentServer implements Runnable {
 	}
 
 	private _Agent getAgent(Socket soc) throws IOException, ClassNotFoundException {
-		assert !soc.isClosed();
 		BAMAgentClassLoader agentLoader = new BAMAgentClassLoader(this.getClass().getClassLoader());
-		
+
 		InputStream in = soc.getInputStream();
 		ObjectInputStream inRepo = new ObjectInputStream(in);
 		AgentInputStream ais = new AgentInputStream(in, agentLoader);
-		
+
 		Jar repo = (Jar) inRepo.readObject();
-		//System.out.println(repo.toString());
-		
+
 		agentLoader.integrateCode(repo);
-		
+
 		_Agent agent = null;
 		agent = (_Agent) ais.readObject();
+		ais.close();
 		return agent;
 	}
 
