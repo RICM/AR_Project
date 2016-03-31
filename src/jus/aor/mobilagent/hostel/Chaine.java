@@ -19,11 +19,11 @@ import jus.aor.mobilagent.hostel.Hotel;
 
 public class Chaine implements _Service<Collection<Hotel>> {
 
-	Collection<Hotel> hotels;
+	private Collection<Hotel> hotels;
 
 	public Chaine(Object... args) {
 		String xmlFile = (String) args[0];
-		hotels = fetchHotels(xmlFile);
+		hotels = loadHotels(xmlFile);
 	}
 
 	@Override
@@ -39,11 +39,10 @@ public class Chaine implements _Service<Collection<Hotel>> {
 		return hotelsInLocalisation;
 	}
 
-	private Collection<Hotel> fetchHotels(String file) {
+	private Collection<Hotel> loadHotels(String file) {
 		Collection<Hotel> hotels = new ArrayList<>();
-		DocumentBuilder docBuilder;
 		try {
-			docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document doc = docBuilder.parse(new File(file));
 			NodeList hotelNodes = doc.getElementsByTagName("Hotel");
 			for (int i = 0; i < hotelNodes.getLength(); i++) {
