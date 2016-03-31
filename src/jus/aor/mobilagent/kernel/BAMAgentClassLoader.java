@@ -54,7 +54,7 @@ public class BAMAgentClassLoader extends ClassLoader {
 	}
 
 	public Jar extractCode() throws JarException, IOException {
-		File jarFile = File.createTempFile("extracted", "jar");
+		File jarFile = File.createTempFile("bamrepository", ".jar");
 		try (JarOutputStream jos = new JarOutputStream(new FileOutputStream(jarFile))) {
 			for (String name : classes.keySet()) {
 				JarEntry je = new JarEntry(name);
