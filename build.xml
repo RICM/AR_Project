@@ -1,0 +1,45 @@
+<project name="AR_Project" basedir=".">
+	<property name="src" location="src"/>
+	<property name="lib" location="lib"/>
+	<property name="bin" location="bin"/>
+
+	<target name="init">
+	    <!-- Create the directory containing compiled classes -->
+	    <mkdir dir="${bin}"/>
+	</target>
+
+	 <target name="clean">
+        <delete dir="bin"/>
+    </target>
+
+	<target name="compile" depends="init" description="compile the source">
+    		<!-- Compile the java code from ${src} into ${bin} -->
+	    	<javac srcdir="${src}/" destdir="${bin}/"  classpath="${lib}/jus.util.jar"/>
+  	</target>
+
+	<target name="build-jar" depends="compile" description="generate the jars">
+		<!-- Contains classes required for the mobile agent server -->
+		<jar destfile="MobilagentServer.jar" basedir="${bin}" includes="jus/aor/mobilagent/kernel/* ">
+			<manifest>
+      				<attribute name="Main-Class" value="jus.aor.mobilagent.kernel.Starter"/>
+				<attribute name="Class-Path" value="lib/jus.util.jar"/>
+		    	</manifest>
+		</jar>
+		
+		<!-- Contains classes required by the Chaine service -->
+		<jar destfile="HostelService.jar" basedir="${bin}" includes="jus/aor/mobilagent/hostel/Chaine.class jus/aor/mobilagent/hostel/Hotel.class jus/aor/mobilagent/hostel/Numero.class" />
+		
+		<!-- Contains classes required by the Annuaire service -->
+		<jar destfile="AnnuaireHotel.jar" basedir="${bin}" includes="jus/aor/mobilagent/hostel/Annuaire.class jus/aor/mobilagent/hostel/Hotel.class jus/aor/mobilagent/hostel/Numero.class" />
+		
+		<!-- Contains classes required by the Duration service -->
+		<jar destfile="Duration.jar" basedir="${bin}" includes="jus/aor/mobilagent/hostel/Duration.class" />
+		
+		<!-- Contains classes required by the LookForHotel mobile agent -->
+		<jar destfile="Hostel.jar" basedir="${bin}" includes="jus/aor/mobilagent/hostel/LookForHotel*" />
+
+		<!-- Contains classes required by the Hello mobile agent -->
+		<jar destfile="Hello.jar" basedir="${bin}" includes="jus/aor/mobilagent/hello/Hello.class" />		
+		
+ 	 </target>
+</project>
