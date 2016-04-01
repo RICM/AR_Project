@@ -10,6 +10,9 @@
 
 	 <target name="clean">
         <delete dir="bin"/>
+        <delete>
+  			<fileset dir="." includes="*.jar"/>
+		</delete>
     </target>
 
 	<target name="compile" depends="init" description="compile the source">
@@ -19,7 +22,7 @@
 
 	<target name="build-jar" depends="compile" description="generate the jars">
 		<!-- Contains classes required for the mobile agent server -->
-		<jar destfile="MobilagentServer.jar" basedir="${bin}" includes="jus/aor/mobilagent/kernel/* ">
+		<jar destfile="MobilagentServer.jar" basedir="${bin}" includes="jus/aor/mobilagent/kernel/* jus/aor/mobilagent/hostel/Hotel.class jus/aor/mobilagent/hostel/Numero.class">
 			<manifest>
       				<attribute name="Main-Class" value="jus.aor.mobilagent.kernel.Starter"/>
 				<attribute name="Class-Path" value="lib/jus.util.jar"/>
@@ -27,10 +30,10 @@
 		</jar>
 		
 		<!-- Contains classes required by the Chaine service -->
-		<jar destfile="HostelService.jar" basedir="${bin}" includes="jus/aor/mobilagent/hostel/Chaine.class jus/aor/mobilagent/hostel/Hotel.class jus/aor/mobilagent/hostel/Numero.class" />
+		<jar destfile="HostelService.jar" basedir="${bin}" includes="jus/aor/mobilagent/hostel/Chaine.class" />
 		
 		<!-- Contains classes required by the Annuaire service -->
-		<jar destfile="AnnuaireHotel.jar" basedir="${bin}" includes="jus/aor/mobilagent/hostel/Annuaire.class jus/aor/mobilagent/hostel/Hotel.class jus/aor/mobilagent/hostel/Numero.class" />
+		<jar destfile="AnnuaireHotel.jar" basedir="${bin}" includes="jus/aor/mobilagent/hostel/Annuaire.class" />
 		
 		<!-- Contains classes required by the Duration service -->
 		<jar destfile="Duration.jar" basedir="${bin}" includes="jus/aor/mobilagent/hostel/Duration.class" />
