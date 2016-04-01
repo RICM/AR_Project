@@ -10,9 +10,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URI;
 import java.net.URL;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -92,6 +90,7 @@ public final class Server implements _Server {
 			BAMAgentClassLoader agentLoader = new BAMAgentClassLoader(uri.getPath(), this.getClass().getClassLoader());
 			Class<?> agentClass = Class.forName(classeName, true, agentLoader);
 			_Agent agent = (_Agent) agentClass.getConstructor(Object[].class).newInstance(new Object[]{args});
+			logger.log(Level.INFO, String.format("Initializing agent on %s...", name));
 			agent.init(agentServer, name);
 			for(int i = 0; i < etapeAddress.size(); i++) {
 				Field f = agentClass.getDeclaredField(etapeAction.get(i));

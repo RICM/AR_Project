@@ -6,10 +6,13 @@ package jus.aor.mobilagent.kernel;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URI;
 import java.net.UnknownHostException;
 import java.util.NoSuchElementException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class Agent implements _Agent {
 
@@ -20,6 +23,9 @@ public abstract class Agent implements _Agent {
 	protected transient AgentServer server;
 	protected transient String serverName;
 	private transient Socket socket;
+	
+	private transient String loggerName;
+	private transient Logger logger;
 	
 	public Agent(Object... args) {}
 
@@ -42,12 +48,22 @@ public abstract class Agent implements _Agent {
 		
 		// first action to perform on the initial server is empty
 		route.add(new Etape(this.server.site(), _Action.NIHIL));
+		
+		try {
+			loggerName = "jus/aor/mobilagent/"+InetAddress.getLocalHost().getHostName()+"/"+serverName;
+			logger = Logger.getLogger(loggerName);
+		} catch (UnknownHostException e) {}
 	}
 
 	@Override
 	public void reInit(AgentServer server, String serverName) {
 		this.server = server;
 		this.serverName = serverName;
+		
+		try {
+			loggerName = "jus/aor/mobilagent/"+InetAddress.getLocalHost().getHostName()+"/"+serverName;
+			logger = Logger.getLogger(loggerName);
+		} catch (UnknownHostException e) {}
 	}
 
 	@Override
@@ -72,6 +88,7 @@ public abstract class Agent implements _Agent {
 	
 	protected void move(URI uri) {
 		try {
+			logger.log(Level.INFO, String.format("[Agent] moving to %s:%d", uri.getHost(), uri.getPort()));
 			socket = new Socket(uri.getHost(), uri.getPort());
 			BAMAgentClassLoader agentLoader = (BAMAgentClassLoader) this.getClass().getClassLoader();
 			Jar repo = agentLoader.extractCode();
