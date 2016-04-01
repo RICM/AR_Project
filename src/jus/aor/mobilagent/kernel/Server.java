@@ -10,7 +10,9 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URI;
 import java.net.URL;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -65,10 +67,9 @@ public final class Server implements _Server {
 	 */
 	public final void addService(String name, String classeName, String codeBase, Object... args) {
 		try {
-			//BAMServerClassLoader serverLoader = (BAMServerClassLoader) this.getClass().getClassLoader();
 			BAMServerClassLoader serverLoader = new BAMServerClassLoader(new URL[]{new URL(codeBase)}, this.getClass().getClassLoader());
-			serverLoader.addURL(new URL(codeBase));
-			Class<?> serviceClass = Class.forName(classeName, true, serverLoader);
+			serverLoader.loadClass(classeName);
+		    Class<?> serviceClass = Class.forName(classeName, true, serverLoader);
 			_Service<?> service = (_Service<?>) serviceClass.getConstructor(Object[].class).newInstance(new Object[]{args});
 			agentServer.addService(name, service);
 		}catch(Exception ex){
