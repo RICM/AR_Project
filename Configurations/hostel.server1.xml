@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!DOCTYPE HTML PUBLIC  "-//W3C//DTD HTML 4.0 Transitional//EN" "Server.dtd"> 
 <server>
-	<port value="222"/>
-	<service name="Hotels" codebase="file:///.../HostelService.jar" class="jus.aor.mobilagent.hostel.Chaine" args=".../DataStore/Hotels1.xml"/>
+	<port value="5555"/>
+	<service name="Hotels" codebase="file:///home/marwan/git/AR_Project/HostelService.jar" class="jus.aor.mobilagent.hostel.Chaine" args="file:///home/marwan/git/AR_Project/DataStore/Hotels1.xml"/>
 </server>
 
