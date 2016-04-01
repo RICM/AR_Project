@@ -1,6 +1,5 @@
 package jus.aor.mobilagent.hostel;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,7 +42,7 @@ public class Chaine implements _Service<Collection<Hotel>> {
 		Collection<Hotel> hotels = new ArrayList<>();
 		try {
 			DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			Document doc = docBuilder.parse(new File(file));
+			Document doc = docBuilder.parse(file);
 			NodeList hotelNodes = doc.getElementsByTagName("Hotel");
 			for (int i = 0; i < hotelNodes.getLength(); i++) {
 				NamedNodeMap m = hotelNodes.item(i).getAttributes();

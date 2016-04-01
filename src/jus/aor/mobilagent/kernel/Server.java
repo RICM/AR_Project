@@ -65,12 +65,14 @@ public final class Server implements _Server {
 	 */
 	public final void addService(String name, String classeName, String codeBase, Object... args) {
 		try {
-			BAMServerClassLoader serverLoader = (BAMServerClassLoader) this.getClass().getClassLoader();
+			//BAMServerClassLoader serverLoader = (BAMServerClassLoader) this.getClass().getClassLoader();
+			BAMServerClassLoader serverLoader = new BAMServerClassLoader(new URL[]{new URL(codeBase)}, this.getClass().getClassLoader());
 			serverLoader.addURL(new URL(codeBase));
 			Class<?> serviceClass = Class.forName(classeName, true, serverLoader);
-			_Service<?> service = (_Service<?>) serviceClass.getConstructor(Object[].class).newInstance(args);
+			_Service<?> service = (_Service<?>) serviceClass.getConstructor(Object[].class).newInstance(new Object[]{args});
 			agentServer.addService(name, service);
 		}catch(Exception ex){
+			ex.printStackTrace();
 			logger.log(Level.FINE," erreur durant le lancement du serveur"+this,ex);
 			return;
 		}

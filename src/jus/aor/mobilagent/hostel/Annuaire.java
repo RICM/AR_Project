@@ -37,7 +37,7 @@ public class Annuaire implements _Service<Numero> {
 		Map<String, Numero> annuaire = new HashMap<>();
 		try {
 			DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			Document doc = docBuilder.parse(new File(file));
+			Document doc = docBuilder.parse(file);
 			NodeList hotelNodes = doc.getElementsByTagName("Telephone");
 			for (int i = 0; i < hotelNodes.getLength(); i++) {
 				NamedNodeMap m = hotelNodes.item(i).getAttributes();
