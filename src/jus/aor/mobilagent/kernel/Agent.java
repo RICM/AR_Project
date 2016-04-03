@@ -24,8 +24,8 @@ public abstract class Agent implements _Agent {
 	protected transient String serverName;
 	private transient Socket socket;
 	
-	private transient String loggerName;
-	private transient Logger logger;
+	protected transient String loggerName;
+	protected transient Logger logger;
 	
 	public Agent(Object... args) {}
 

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 import jus.aor.mobilagent.kernel.Agent;
 import jus.aor.mobilagent.kernel._Action;
@@ -33,11 +34,13 @@ public class LookForHotel extends Agent {
 
 		private static final long serialVersionUID = -3360083386110147495L;
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public void execute() {
 			_Service<?> ch = getService("Hotels");
 			Collection<Hotel> h = (Collection<Hotel>) ch.call(new Object[] { localisation });
 			hotels.addAll(h);
+			logger.log(Level.INFO, "found " + h.size() + " hotels in " + localisation);
 		}
 	};
 
@@ -47,6 +50,7 @@ public class LookForHotel extends Agent {
 
 		@Override
 		public void execute() {
+			logger.log(Level.INFO, "getting phone numbers");
 			_Service<?> annuaire = getService("Telephones");
 			for (Hotel h : hotels) {
 				Numero num = (Numero) annuaire.call(new Object[] { h.name });
@@ -65,8 +69,10 @@ public class LookForHotel extends Agent {
 			public void execute() {
 				_Service<?> duration = getService("Duration");
 				double d = (Double) duration.call(new Object[] { start });
-				System.out.println("found " + hotels.size() + " hotels in " + localisation);
-				System.out.println("lookup time: " + d);
+				logger.log(Level.INFO, "found " + hotels.size() + " hotels in " + localisation);
+				logger.log(Level.INFO, "lookup time: " + d);
+				//System.out.println("found " + hotels.size() + " hotels in " + localisation);
+				//System.out.println("lookup time: " + d);
 			}
 		};
 	}
