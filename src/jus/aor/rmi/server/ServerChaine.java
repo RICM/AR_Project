@@ -24,6 +24,10 @@ import jus.aor.rmi.common.Hotel;
 public class ServerChaine {
 
 	public static void main(String args[]) {
+		
+		if(System.getSecurityManager() == null) {
+			System.setSecurityManager(new SecurityManager());
+		}
 		if (args.length < 4) {
 			System.out.println("params: <service-name> <data-file> <host> <port>");
 			System.exit(1);
