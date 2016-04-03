@@ -2,7 +2,6 @@ package jus.aor.rmi.client; /**
 							* J<i>ava</i> U<i>tilities</i> for S<i>tudents</i>
 							*/
 
-import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -11,19 +10,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
-import java.util.logging.StreamHandler;
 import java.util.regex.Pattern;
 
 import jus.aor.rmi.common.Hotel;
 import jus.aor.rmi.common.Numero;
 import jus.aor.rmi.common._Annuaire;
 import jus.aor.rmi.common._Chaine;
-import jus.util.Calcul;
 
 /**
  * Représente un client effectuant une requête lui permettant d'obtenir les

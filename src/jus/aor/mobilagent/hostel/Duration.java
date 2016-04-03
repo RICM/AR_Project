@@ -6,6 +6,7 @@ package jus.aor.mobilagent.hostel;
 import jus.aor.mobilagent.kernel._Service;
 
 public class Duration implements _Service<Double> {
+	
 
 	public Duration(Object... args) {}
 
