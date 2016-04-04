@@ -1,6 +1,9 @@
 package jus.aor.mobilagent.hello;
 
 import jus.aor.mobilagent.kernel._Action;
+
+import java.util.Map;
+
 import jus.aor.mobilagent.kernel.Agent;
 
 /**
@@ -45,6 +48,12 @@ public class Hello extends Agent{
 				System.out.println(String.format("List of visited servers:\n%s", visited));
 			}
 		};
+		
+	}
+
+	@Override
+	protected Map<String, String> actions() {
+		return null;
 	}
 
 }
