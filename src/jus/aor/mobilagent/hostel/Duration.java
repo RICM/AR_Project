@@ -17,7 +17,9 @@ public class Duration implements _Service<Double> {
 		Long start, end;
 		start = (Long) params[0];
 		end = System.nanoTime();
-		return (end - start) * 10e-9;
+		long elapsedTime = end - start;
+		double seconds = (double)elapsedTime / 1e9;
+		return seconds;
 	}
 
 }
