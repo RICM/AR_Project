@@ -24,9 +24,9 @@
 		<!-- Contains classes required for the mobile agent server -->
 		<jar destfile="MobilagentServer.jar" basedir="${bin}" includes="jus/aor/mobilagent/kernel/* jus/aor/mobilagent/hostel/Hotel.class jus/aor/mobilagent/hostel/Numero.class">
 			<manifest>
-      				<attribute name="Main-Class" value="jus.aor.mobilagent.kernel.Starter"/>
+      			<attribute name="Main-Class" value="jus.aor.mobilagent.kernel.Starter"/>
 				<attribute name="Class-Path" value="lib/jus.util.jar"/>
-		    	</manifest>
+		    </manifest>
 		</jar>
 		
 		<!-- Contains classes required by the Chaine service -->
@@ -42,7 +42,16 @@
 		<jar destfile="Hostel.jar" basedir="${bin}" includes="jus/aor/mobilagent/hostel/LookForHotel*" />
 
 		<!-- Contains classes required by the Hello mobile agent -->
-		<jar destfile="Hello.jar" basedir="${bin}" includes="jus/aor/mobilagent/hello/Hello.class" />		
+		<jar destfile="Hello.jar" basedir="${bin}" includes="jus/aor/mobilagent/hello/Hello.class" />
+
+		<!-- Contains classes required by the RMI service broker -->
+		<jar destfile="Broker.jar" basedir="${bin}" includes="jus/aor/mobilagent/broker/server/* jus/aor/mobilagent/broker/_ServiceBroker.class">
+			<manifest>
+      			<attribute name="Main-Class" value="jus.aor.mobilagent.broker.server.BrokerServer"/>
+				<attribute name="Class-Path" value="lib/jus.util.jar"/>
+		    </manifest>
+		</jar>
+		
 		
  	 </target>
 </project>
