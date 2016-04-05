@@ -8,8 +8,8 @@
 	<service name="Telephones" codebase="file:///.../AnnuaireHotel.jar" class="jus.aor.mobilagent.hostel.Annuaire" args=".../DataStore/Annuaire.xml"/>
 -->
 	<agent class="jus.aor.mobilagent.hostel.LookForHotel" codebase="file:///home/marwan/git/AR_Project/Hostel.jar" args="Paris">
-		<etape server="mobilagent://localhost:5555/" action="findHotel" />
-		<etape server="mobilagent://localhost:6666/" action="findHotel" />
+		<etape server="mobilagent://localhost:5555/" action="findHotel" /> 
+		 <etape server="mobilagent://localhost:6666/" action="findHotel" /> 
 		<etape server="mobilagent://localhost:7777/" action="findTelephone" />
 	</agent>
 <!--

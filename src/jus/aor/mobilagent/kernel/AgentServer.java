@@ -7,15 +7,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.UnknownHostException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import jus.aor.mobilagent.broker._ServiceBroker;
 
 public class AgentServer implements Runnable {
 
@@ -67,6 +73,21 @@ public class AgentServer implements Runnable {
 
 	public void addService(String name, _Service<?> service) {
 		services.put(name, service);
+		
+		// announce the service to the RMI service broker
+		try {
+			_ServiceBroker broker = (_ServiceBroker) Naming.lookup("//localhost:1099/Broker");
+			String server = "mobilagent://" + InetAddress.getLocalHost().getHostName() + ":" + port;
+			broker.announce(server, name);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			e.printStackTrace();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public String toString() {

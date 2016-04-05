@@ -1,6 +1,3 @@
-/**
- * 
- */
 package jus.aor.mobilagent.hostel;
 
 import java.util.ArrayList;
@@ -59,7 +56,7 @@ public class LookForHotel extends Agent {
 		}
 	};
 
-	@Override
+	
 	protected _Action retour() {
 		return new _Action() {
 
@@ -75,6 +72,13 @@ public class LookForHotel extends Agent {
 				//System.out.println("lookup time: " + d);
 			}
 		};
+	}
+	
+	protected Map<String, String> actions() {
+		Map<String, String> m = new HashMap<>();
+		m.put("findHotel", "Hotels");
+		m.put("findTelephone", "Telephones");
+		return m;
 	}
 
 }
